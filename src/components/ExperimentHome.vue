@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { useRouter } from 'vue-router';
+// import { useRouter } from 'vue-router';
 import { eventBus } from '../eventBus.ts';
 
-const router = useRouter();
+// const router = useRouter();
 
 eventBus.on('enterKeyPressed', () => {
   console.log('enterKeyPressed on start');
