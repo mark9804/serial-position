@@ -1,11 +1,21 @@
 <script setup lang="ts">
-// import { useRouter } from 'vue-router';
+import { useRouter } from 'vue-router';
 import { eventBus } from '../eventBus.ts';
 
-// const router = useRouter();
+const router = useRouter();
 
 eventBus.on('enterKeyPressed', () => {
   console.log('enterKeyPressed on start');
+  eventBus.off('enterKeyPressed');
+  console.log('enterKeyPressed off start');
+  setTimeout(() => {
+    router.push({
+      name: 'OverallExperimentBriefing',
+      query: {
+        nextSession: 1,
+      },
+    });
+  }, 4);
 });
 </script>
 
@@ -18,7 +28,7 @@ eventBus.on('enterKeyPressed', () => {
         用意できたら，右の図のようにセッション1-6と記述してください<br />
         その際，上下の間隔は余裕を持つようにしてください
       </p>
-      <p>準備ができたらEnterキーを押して次に進んでください</p>
+      <p>準備ができたら Enter キーを押して次に進んでください</p>
     </div>
     <img alt="説明" src="@assets/intro_paper.jpg" />
   </div>
