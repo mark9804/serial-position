@@ -1,61 +1,31 @@
 <script setup lang="ts">
 import { eventBus } from '@/eventBus.ts';
-import { settings } from '@/settings.ts';
-import { computed, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { useSerialPositionStore } from '@/store/store';
-import { WordSet } from '@/types/ExperimentTypes';
-
-const useStore = useSerialPositionStore();
+import SerialPosition from '@components/experiments/SerialPosition.vue';
 
 const router = useRouter();
-const params = computed(() => router.currentRoute.value.params);
-const experimentType = computed(() => params.value.experimentType);
-const session = computed(() => (params.value.session as unknown as number) * 1);
-
-const groupOrder = computed(() => useStore.getGroupOrder);
-const wordListByGroup = computed(
-  () =>
-    useStore.getWordListByGroup(groupOrder.value[session.value - 1]) as WordSet
-);
-
-const currentWord = ref('');
-
-function wait(ms: number) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
+const params = router.currentRoute.value.params;
+const experimentType = params.experimentType;
+// const session = params.session;
+const templates = [
+  {
+    name: 'memorize',
+    component: SerialPosition,
+  },
+];
 
 eventBus.on('experimentEnd', () => {
-  eventBus.off('experimentEnd');
-  setTimeout(() => {
-    router.push({
-      name: 'ExperimentEnd',
-      params: {
-        experimentType: experimentType.value,
-        session: session.value,
-      },
-    });
-  }, 1000);
+  console.log('experimentEnd');
 });
 
-async function switchWords(count: number) {
-  if (0 === count) {
-    currentWord.value = '';
-    eventBus.emit('experimentEnd');
-  } else {
-    currentWord.value = wordListByGroup.value.words[10 - count];
-    await wait(settings.waitTime);
-    await switchWords(count - 1);
-  }
-}
-
-onMounted(() => {
-  switchWords(10);
-});
+const currentComponent = () => {
+  const template = templates.find(template => template.name === experimentType);
+  return template ? template.component : null;
+};
 </script>
 
 <template>
-  <div class="flex flex-col text-4xl px-8 font-bold">{{ currentWord }}</div>
+  <component :is="currentComponent()" />
 </template>
 
 <style scoped lang="scss"></style>
