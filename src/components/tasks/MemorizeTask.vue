@@ -27,10 +27,10 @@ function wait(ms: number) {
 async function switchWords(count: number) {
   if (0 === count) {
     currentWord.value = '';
-    eventBus.emit('experimentEnd');
+    eventBus.emit('taskEnd');
   } else {
     currentWord.value = wordListByGroup.value.words[10 - count];
-    await wait(settings.waitTime);
+    await wait(settings.waitTime * 1000);
     await switchWords(count - 1);
   }
 }

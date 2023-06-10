@@ -17,23 +17,28 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: '/sessions/:session/:experimentType/briefing',
-    name: 'ExperimentBriefing',
-    component: () => import('@components/ExperimentBriefing.vue'),
+    name: 'TaskBriefing',
+    component: () => import('@components/TaskBriefing.vue'),
   },
   {
     path: '/sessions/:session/:experimentType/start',
-    name: 'ExperimentComponent',
+    name: 'TaskComponent',
     component: () => import('@components/ExperimentComponent.vue'),
   },
   {
     path: '/sessions/:session/:experimentType/end',
-    name: 'ExperimentEnd',
+    name: 'TaskEnd',
     component: () => import('@components/ExperimentEnd.vue'),
   },
   {
     path: '/sessions/:session/end',
     name: 'SessionEnd',
     component: () => import('@components/SessionEnd.vue'),
+  },
+  {
+    path: '/end',
+    name: 'ExperimentEnd',
+    component: () => import('@components/ExperimentEnd.vue'),
   },
 ];
 

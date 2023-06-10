@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { eventBus } from '@/eventBus.ts';
+import { settings } from '@/settings';
 import { computed } from 'vue';
 import { h } from 'vue';
 import { useRouter } from 'vue-router';
-import { ExperimentType, SessionString } from '@/types/ExperimentTypes.ts';
+import { ExperimentType, SessionString } from '@/types/ExperimentTypes';
 
 const router = useRouter();
 
@@ -62,8 +63,14 @@ function renderSessionBriefing(type: ExperimentType) {
   return h('div', { class: 'flex flex-col gap-8 px-8 text-2xl' }, [
     h(
       'h1',
-      { class: 'font-bold text-4xl' },
-      `${'calculate' !== experimentType.value ? 'これから' : '5秒後に'}` +
+      {
+        class: 'font-bold text-4xl',
+      },
+      `${
+        'calculate' !== experimentType.value
+          ? 'これから'
+          : `${settings.waitTimeBeforeCalculate}秒後に`
+      }` +
         getExperimentName(experimentType.value) +
         'を行います'
     ),
@@ -84,7 +91,7 @@ switch (experimentType.value) {
       console.log('enterKeyPressed off ExperimentBriefing');
       setTimeout(() => {
         router.push({
-          name: 'ExperimentComponent',
+          name: 'TaskComponent',
           params: {
             experimentType: 'memorize',
             session: session.value,
@@ -95,20 +102,15 @@ switch (experimentType.value) {
     break;
   case 'calculate':
     console.log('calculate');
-    eventBus.on('enterKeyPressed', () => {
-      console.log('enterKeyPressed on ExperimentBriefing');
-      eventBus.off('enterKeyPressed');
-      console.log('enterKeyPressed off ExperimentBriefing');
-      setTimeout(() => {
-        router.push({
-          name: 'ExperimentComponent',
-          params: {
-            experimentType: 'calculate',
-            session: session.value,
-          },
-        });
-      }, 4);
-    });
+    setTimeout(() => {
+      router.push({
+        name: 'TaskComponent',
+        params: {
+          experimentType: 'calculate',
+          session: session.value,
+        },
+      });
+    }, settings.waitTimeBeforeCalculate * 1000);
     break;
   case 'recall':
     console.log('recall');

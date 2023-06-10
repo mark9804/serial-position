@@ -18,7 +18,7 @@ eventBus.on('enterKeyPressed', () => {
   console.log('enterKeyPressed off briefing');
   setTimeout(() => {
     router.push({
-      name: 'ExperimentBriefing',
+      name: 'TaskBriefing',
       params: {
         session: nextSession.value,
         experimentType: 'memorize',
