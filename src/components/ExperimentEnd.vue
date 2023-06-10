@@ -10,8 +10,7 @@ const { copy } = useClipboard({ legacy: true });
 const groupOrder = computed(() => useStore.getGroupOrder);
 
 function getExperimentIdentifier() {
-  const identifier = groupOrder.value.join('');
-  return identifier;
+  return groupOrder.value.join('');
 }
 
 const experimentIdentifier = computed(() => getExperimentIdentifier());

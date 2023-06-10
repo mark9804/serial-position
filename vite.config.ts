@@ -50,5 +50,17 @@ export default defineConfig({
       toplevel: true,
       safari10: true,
     },
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          if (id.includes('components')) {
+            // packs all /components/*.vue files into components.js
+            return 'components';
+          }
+        },
+      },
+    },
   },
 });
