@@ -62,14 +62,21 @@ function renderSessionBriefing(type: ExperimentType) {
   }
   return h('div', { class: 'flex flex-col gap-8 px-8 text-2xl' }, [
     h(
+      'div',
+      {
+        class: 'text-1xl',
+      },
+      `セッション${session.value}`
+    ),
+    h(
       'h1',
       {
         class: 'font-bold text-4xl',
       },
       `${
         'calculate' !== experimentType.value
-          ? 'これから'
-          : `${settings.waitTimeBeforeCalculate}秒後に`
+          ? `これから`
+          : `${settings.waitTimeBeforeCalculate}秒後にの`
       }` +
         getExperimentName(experimentType.value) +
         'を行います'

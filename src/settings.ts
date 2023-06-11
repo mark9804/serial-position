@@ -1,8 +1,8 @@
 export const settings = {
-  waitTime: 0.1, // seconds
+  waitTime: 1, // seconds
   formUrl: 'https://forms.office.com/r/3UnE4zT08C',
   qrCodeImgUrl: '/qrcode.png',
-  waitTimeBeforeCalculate: 3, // seconds
-  calculateDuration: 3, // seconds
-  recallDuration: 3, // seconds
+  waitTimeBeforeCalculate: 60, // seconds
+  calculateDuration: 60, // seconds
+  recallDuration: 60, // seconds
 };

@@ -55,8 +55,14 @@ function handleNext() {
         >
       </p>
     </div>
-    <img class="max-w-screen-sm" :src="settings.qrCodeImgUrl" alt="QRコード" />
+    <img class="qr-code-image" :src="settings.qrCodeImgUrl" alt="QRコード" />
   </div>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+img.qr-code-image {
+  width: 48vw;
+  min-width: 512px;
+  max-width: 720px;
+}
+</style>
