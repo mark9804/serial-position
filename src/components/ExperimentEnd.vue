@@ -32,7 +32,7 @@ function handleNext() {
 <template>
   <div class="flex flex-col gap-8 px-8 text-2xl">
     <h1 class="font-bold text-4xl">実験課題はこれで終わります</h1>
-    <p>あなたの６桁の系列識別番号は：{{ getExperimentIdentifier() }}</p>
+    <p>あなたの６桁の確認番号は：{{ getExperimentIdentifier() }}</p>
     <p>「コピー」ボタンを押して，クリップボードにコピーしてください</p>
     <p>この後，課題中に思い出した刺激を入力してもらいます</p>
     <p>下のボタンをを押して入力フォームを提出してください</p>
@@ -40,7 +40,7 @@ function handleNext() {
       class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
       @click="handleNext"
     >
-      系列識別番号をコピーして入力フォームに移動する
+      確認番号をコピーして入力フォームに移動する
     </button>
   </div>
 </template>
