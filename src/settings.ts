@@ -1,7 +1,7 @@
 export const settings = {
   waitTime: 0.1, // seconds
   formUrl: 'https://forms.office.com/r/nYNHnrjRvq',
-  waitTimeBeforeCalculate: 1, // seconds
-  calculateDuration: 1, // seconds
-  recallDuration: 1, // seconds
+  waitTimeBeforeCalculate: 3, // seconds
+  calculateDuration: 3, // seconds
+  recallDuration: 3, // seconds
 };
