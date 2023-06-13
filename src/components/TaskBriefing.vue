@@ -64,9 +64,10 @@ function renderSessionBriefing(type: ExperimentType) {
     h(
       'div',
       {
-        class: 'text-1xl',
+        class: 'text-4xl font-bold',
+        style: 'text-align: center',
       },
-      `セッション${session.value}`
+      `セッション ${session.value}`
     ),
     h(
       'h1',
