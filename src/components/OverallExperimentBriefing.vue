@@ -10,7 +10,7 @@ const query = computed(() => router.currentRoute.value.query);
 const nextSession: ComputedRef<Session> = computed(
   () => query.value.nextSession as unknown as Session
 );
-const hasThreeSessions = computed(() => nextSession.value <= 3);
+const hasThreeSessions = computed(() => nextSession.value > 3);
 
 eventBus.on('enterKeyPressed', () => {
   console.log('enterKeyPressed on briefing');
@@ -29,7 +29,7 @@ eventBus.on('enterKeyPressed', () => {
 </script>
 
 <template>
-  <div class="flex flex-col gap-8 px-8 text-2xl">
+  <div class="flex flex-col gap-8 px-8 text-2xl" v-if="nextSession == 1">
     <h1 class="font-bold text-4xl">
       これからの 3 セッションでは以下の順番で
       {{ hasThreeSessions ? '3' : '2' }} つの課題を行います
@@ -52,6 +52,15 @@ eventBus.on('enterKeyPressed', () => {
       手元の用紙に記述してください。思い出す順番は自由で構いません
     </p>
     <p>課題について理解出来たら，Enter キーを押して実験を始めてください</p>
+  </div>
+  <div class="flex flex-col gap-8 px-8 text-2xl" v-else>
+    <h1 class="font-bold text-4xl">このセッションはこれで終了です</h1>
+    <p>
+      このセッションで記入した刺激は見えないように隠してください<br />
+      （別の紙で覆う、裏に折りたたむなどしてください）
+    </p>
+    <p>必要であればここで休憩をとっても構いません</p>
+    <p>準備ができたらEnterキーを押して、次に進んでください</p>
   </div>
 </template>
 

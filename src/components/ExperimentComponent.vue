@@ -57,7 +57,7 @@ function handleNextExperiment(
     });
   }
   if ('memorize' === experimentType) {
-    if (currentSession <= 3) {
+    if (currentSession > 3) {
       router.push({
         name: 'TaskBriefing',
         params: {

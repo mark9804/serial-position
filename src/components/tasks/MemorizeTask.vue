@@ -31,6 +31,8 @@ async function switchWords(count: number) {
   } else {
     currentWord.value = wordListByGroup.value.words[10 - count];
     await wait(settings.waitTime * 1000);
+    currentWord.value = '';
+    await wait(settings.wordInterval * 1000);
     await switchWords(count - 1);
   }
 }
