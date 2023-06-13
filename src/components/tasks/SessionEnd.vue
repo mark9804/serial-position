@@ -5,7 +5,7 @@ import { useRouter } from 'vue-router';
 const router = useRouter();
 
 eventBus.on('enterKeyPressed', () => {
-  router.push({});
+  router.replace({});
 });
 </script>
 

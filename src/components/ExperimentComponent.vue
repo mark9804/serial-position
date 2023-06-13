@@ -35,11 +35,11 @@ function handleNextExperiment(
   const currentSession = (session as unknown as number) * 1;
   if ('recall' === experimentType) {
     if (currentSession >= 6) {
-      router.push({
+      router.replace({
         name: 'ExperimentEnd',
       });
     } else {
-      router.push({
+      router.replace({
         name: 'OverallExperimentBriefing',
         query: {
           nextSession: currentSession + 1,
@@ -48,7 +48,7 @@ function handleNextExperiment(
     }
   }
   if ('calculate' === experimentType) {
-    router.push({
+    router.replace({
       name: 'TaskComponent',
       params: {
         experimentType: 'recall',
@@ -58,7 +58,7 @@ function handleNextExperiment(
   }
   if ('memorize' === experimentType) {
     if (currentSession > 3) {
-      router.push({
+      router.replace({
         name: 'TaskBriefing',
         params: {
           experimentType: 'calculate',
@@ -66,7 +66,7 @@ function handleNextExperiment(
         },
       });
     } else {
-      router.push({
+      router.replace({
         name: 'TaskComponent',
         params: {
           experimentType: 'recall',

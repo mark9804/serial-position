@@ -9,7 +9,7 @@ eventBus.on('enterKeyPressed', () => {
   eventBus.off('enterKeyPressed');
   console.log('enterKeyPressed off start');
   setTimeout(() => {
-    router.push({
+    router.replace({
       name: 'OverallExperimentBriefing',
       query: {
         nextSession: 1,

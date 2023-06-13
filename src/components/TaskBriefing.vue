@@ -98,7 +98,7 @@ switch (experimentType.value) {
       eventBus.off('enterKeyPressed');
       console.log('enterKeyPressed off ExperimentBriefing');
       setTimeout(() => {
-        router.push({
+        router.replace({
           name: 'TaskComponent',
           params: {
             experimentType: 'memorize',
@@ -111,7 +111,7 @@ switch (experimentType.value) {
   case 'calculate':
     console.log('calculate');
     setTimeout(() => {
-      router.push({
+      router.replace({
         name: 'TaskComponent',
         params: {
           experimentType: 'calculate',
