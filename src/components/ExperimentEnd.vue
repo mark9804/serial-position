@@ -30,7 +30,7 @@ function handleNext() {
 </script>
 
 <template>
-  <div class="flex columns-2">
+  <div class="flex columns-2 items-center">
     <div class="flex flex-col gap-8 px-8 text-2xl">
       <h1 class="font-bold text-4xl">実験課題はこれで終わります</h1>
       <p>あなたの６桁の確認番号は：{{ getExperimentIdentifier() }}</p>
@@ -61,8 +61,9 @@ function handleNext() {
 
 <style scoped lang="scss">
 img.qr-code-image {
-  width: 48vw;
-  min-width: 512px;
-  max-width: 720px;
+  width: 360px;
+  max-width: 48vw;
+  height: 100%;
+  aspect-ratio: 1 / 1;
 }
 </style>
