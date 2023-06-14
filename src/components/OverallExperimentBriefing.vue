@@ -1,26 +1,36 @@
 <script setup lang="ts">
 import { eventBus } from '@/eventBus.ts';
-import { ComputedRef, computed } from 'vue';
+import { computed } from 'vue';
 import { useRouter } from 'vue-router';
+import { useSerialPositionStore } from '@/store/store';
 import { Session } from '@/types/ExperimentTypes';
 
 const router = useRouter();
+const useStore = useSerialPositionStore();
 
 const query = computed(() => router.currentRoute.value.query);
-const nextSession: ComputedRef<Session> = computed(
-  () => query.value.nextSession as unknown as Session
+
+const sessionOrder = computed(() => useStore.getSessionOrder);
+
+const nextSession = computed(
+  () => (query.value.nextSession * 1) as unknown as Session
 );
-const hasThreeSessions = computed(() => nextSession.value > 3);
+
+console.log(nextSession.value);
+
+const hasThreeSessions = computed(
+  () => 1 === sessionOrder.value[nextSession.value - 1] * 1
+);
 
 eventBus.on('enterKeyPressed', () => {
-  console.log('enterKeyPressed on briefing');
+  const next = nextSession.value;
+  console.log('next', next);
   eventBus.off('enterKeyPressed');
-  console.log('enterKeyPressed off briefing');
   setTimeout(() => {
     router.replace({
       name: 'TaskBriefing',
       params: {
-        session: nextSession.value,
+        session: next,
         experimentType: 'memorize',
       },
     });
@@ -29,9 +39,9 @@ eventBus.on('enterKeyPressed', () => {
 </script>
 
 <template>
-  <div class="flex flex-col gap-8 px-8 text-2xl" v-if="nextSession == 1">
+  <div class="flex flex-col gap-8 px-8 text-2xl">
     <h1 class="font-bold text-4xl">
-      これからの 3 セッションでは以下の順番で
+      これからのセッションでは以下の順番で
       {{ hasThreeSessions ? '3' : '2' }} つの課題を行います
     </h1>
     <p>
@@ -52,15 +62,6 @@ eventBus.on('enterKeyPressed', () => {
       手元の用紙に記述してください。思い出す順番は自由で構いません
     </p>
     <p>課題について理解出来たら，Enter キーを押して実験を始めてください</p>
-  </div>
-  <div class="flex flex-col gap-8 px-8 text-2xl" v-else>
-    <h1 class="font-bold text-4xl">このセッションはこれで終了です</h1>
-    <p>
-      このセッションで記入した刺激は見えないように隠してください<br />
-      （別の紙で覆う、裏に折りたたむなどしてください）
-    </p>
-    <p>必要であればここで休憩をとっても構いません</p>
-    <p>準備ができたらEnterキーを押して、次に進んでください</p>
   </div>
 </template>
 

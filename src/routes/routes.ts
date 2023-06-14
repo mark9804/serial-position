@@ -26,11 +26,6 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@components/ExperimentComponent.vue'),
   },
   {
-    path: '/sessions/:session/:experimentType/end',
-    name: 'TaskEnd',
-    component: () => import('@components/SessionEnd.vue'),
-  },
-  {
     path: '/sessions/:session/end',
     name: 'SessionEnd',
     component: () => import('@components/SessionEnd.vue'),

@@ -12,6 +12,17 @@ function generateRandomGroup() {
   return randomGroup as ('A' | 'B' | 'C' | 'D' | 'E' | 'F')[];
 }
 
+function generateRandomSession() {
+  const groups = [1, 1, 1, 0, 0, 0];
+  const randomGroup = [];
+  for (let i = 0; i < 6; i++) {
+    const randomIndex = Math.floor(Math.random() * groups.length);
+    randomGroup.push(groups[randomIndex]);
+    groups.splice(randomIndex, 1);
+  }
+  return randomGroup as (0 | 1)[];
+}
+
 export const useSerialPositionStore = defineStore({
   id: 'serial-position-store',
   state: () => {
@@ -49,6 +60,7 @@ export const useSerialPositionStore = defineStore({
         },
       ] as WordSet[],
       groupOrder: generateRandomGroup(),
+      sessionOrder: generateRandomSession(),
     };
   },
   getters: {
@@ -56,5 +68,6 @@ export const useSerialPositionStore = defineStore({
       return state.wordList.find(wordSet => wordSet.group === group);
     },
     getGroupOrder: state => state.groupOrder,
+    getSessionOrder: state => state.sessionOrder,
   },
 });

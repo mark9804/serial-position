@@ -2,17 +2,26 @@
 import { eventBus } from '@/eventBus.ts';
 import { computed, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
+import { useSerialPositionStore } from '@/store/store';
 import { ExperimentType, SessionString } from '@/types/ExperimentTypes.ts';
 import CalculateTask from '@components/tasks/CalculateTask.vue';
 import MemorizeTask from '@components/tasks/MemorizeTask.vue';
 import RecallTask from '@components/tasks/RecallTask.vue';
 
 const router = useRouter();
+const useStore = useSerialPositionStore();
 const params = computed(() => router.currentRoute.value.params);
 const experimentType = computed(
   () => params.value.experimentType as ExperimentType
 );
 const session = computed(() => params.value.session as SessionString);
+
+const sessionOrder = computed(() => useStore.getSessionOrder);
+
+const hasThreeSessions = computed(
+  () => 1 === sessionOrder.value[session.value * 1 - 1] * 1
+);
+
 const templates = [
   {
     name: 'memorize',
@@ -40,9 +49,9 @@ function handleNextExperiment(
       });
     } else {
       router.replace({
-        name: 'OverallExperimentBriefing',
-        query: {
-          nextSession: currentSession + 1,
+        name: 'SessionEnd',
+        params: {
+          session: currentSession,
         },
       });
     }
@@ -57,7 +66,7 @@ function handleNextExperiment(
     });
   }
   if ('memorize' === experimentType) {
-    if (currentSession > 3) {
+    if (hasThreeSessions.value) {
       router.replace({
         name: 'TaskBriefing',
         params: {
@@ -78,7 +87,6 @@ function handleNextExperiment(
 }
 
 eventBus.on('taskEnd', () => {
-  console.log('taskEnd received');
   setTimeout(
     () => handleNextExperiment(session.value, experimentType.value),
     4

@@ -1,17 +1,12 @@
 <script setup lang="ts">
 import { eventBus } from '@/eventBus';
 import { settings } from '@/settings';
-import { onMounted, onUnmounted } from 'vue';
+import { onMounted } from 'vue';
 
 onMounted(() => {
   setTimeout(() => {
     eventBus.emit('taskEnd');
-    console.log('recall task end emitted');
   }, settings.recallDuration * 1000);
-});
-
-onUnmounted(() => {
-  console.log('recall unmounted');
 });
 </script>
 
