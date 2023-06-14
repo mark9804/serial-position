@@ -13,7 +13,8 @@ const query = computed(() => router.currentRoute.value.query);
 const sessionOrder = computed(() => useStore.getSessionOrder);
 
 const nextSession = computed(
-  () => (query.value.nextSession * 1) as unknown as Session
+  () =>
+    ((query.value.nextSession as unknown as number) * 1) as unknown as Session
 );
 
 console.log(nextSession.value);

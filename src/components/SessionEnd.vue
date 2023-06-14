@@ -12,7 +12,7 @@ eventBus.on('enterKeyPressed', () => {
   router.replace({
     name: 'OverallExperimentBriefing',
     query: {
-      nextSession: currentSession.value * 1 + 1,
+      nextSession: (currentSession.value as unknown as number) * 1 + 1,
     },
   });
 });

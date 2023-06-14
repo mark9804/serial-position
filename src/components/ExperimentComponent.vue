@@ -19,7 +19,12 @@ const session = computed(() => params.value.session as SessionString);
 const sessionOrder = computed(() => useStore.getSessionOrder);
 
 const hasThreeSessions = computed(
-  () => 1 === sessionOrder.value[session.value * 1 - 1] * 1
+  () =>
+    1 ===
+    (sessionOrder.value[
+      (session.value as unknown as number) * 1 - 1
+    ] as unknown as number) *
+      1
 );
 
 const templates = [
