@@ -23,6 +23,8 @@ const hasThreeSessions = computed(
   () => 1 === sessionOrder.value[nextSession.value - 1] * 1
 );
 
+const shouldSkipIntro = computed(() => ![1, 4].includes(nextSession.value));
+
 eventBus.on('enterKeyPressed', () => {
   const next = nextSession.value;
   console.log('next', next);
@@ -37,10 +39,14 @@ eventBus.on('enterKeyPressed', () => {
     });
   }, 4);
 });
+
+if (shouldSkipIntro.value) {
+  eventBus.emit('enterKeyPressed');
+}
 </script>
 
 <template>
-  <div class="flex flex-col gap-8 px-8 text-2xl">
+  <div class="flex flex-col gap-8 px-8 text-2xl" v-if="!shouldSkipIntro">
     <h1 class="font-bold text-4xl">
       これからのセッションでは以下の順番で
       {{ hasThreeSessions ? '3' : '2' }} つの課題を行います
